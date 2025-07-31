@@ -1,0 +1,6 @@
+- Did not remember how to create react app
+- what does timeout Returns?
+- What does interVal ref returns;
+- in 45 mins, i was only able to create the simple banner + auto dismiss
+- to add the progress bar, it took another 20 mins;
+- speed is slow
