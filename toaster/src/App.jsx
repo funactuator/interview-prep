@@ -6,19 +6,43 @@ import { SimpleBanner } from "./components/simple-banner";
 // 1. Create Banner which can be dismissed
 // 2. Create a banner which can be auto dismiss
 // 3. Create such that multiple banner can be trigged and they can be dismissed
+// 4. Type variants
+//5. Trigger from anywhere
+//6. Accessibility
+//7. Animation and Performance
+//8. Cross team applicability
 
 function App() {
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const DISMISS_TIME = 5000;
+
+  const [toasts, setToasts] = useState([])
 
   // const timer = useRef();
 
-  const bannerTrigger = () => {
-    setShow(true);
-    setTimeout(() => {
-      setShow(false);
-    }, DISMISS_TIME);
-  };
+  // do you think this is required?  especially setting timeout, can't it be done inside the component itself
+  // const bannerTrigger = () => {
+  //   setShow(true);
+  //   setTimeout(() => {
+  //     setShow(false);
+  //   }, DISMISS_TIME);
+  // };
+
+  const addBannerTrigger = (e, message = "Banner Opened successfully", autoDismiss = true) => {
+    setToasts((prev) => ([
+      ...prev, 
+      {id: Date.now(), autoDismiss, message}
+    ]))
+  }
+
+  const closeBanner = (id) => {
+    console.log(id);
+    setToasts((prev) => prev.filter((p) => {
+      return p.id !== id;
+    }))
+  }
+
+
 
   // how can we add progressbar with timer thingy?
 
@@ -30,10 +54,11 @@ function App() {
           gap: "2rem",
         }}
       >
-        <button onClick={() => setShow(true)}>Trigger Banner</button>
-        <button onClick={bannerTrigger}>Trigger Banner with AutoDismiss</button>
+        <button onClick={addBannerTrigger}>Trigger Banner</button>
+        {/* <button onClick={bannerTrigger}>Trigger Banner with AutoDismiss</button> */}
       </div>
 
+{/* do we require show and setShow */}
       <div
         style={{
           position: "absolute",
@@ -41,13 +66,17 @@ function App() {
           right: "1rem",
         }}
       >
-        <SimpleBanner
-          autoDismiss = {true}
+        {toasts.map((t) => 
+          <SimpleBanner
+          key={t.id}
+          autoDismiss = {t.autoDismiss}
           dismissTime = {DISMISS_TIME}
-          show={show}
-          setShow={setShow}
-          text="Banner opened successFully"
+          closeBanner = {closeBanner}
+          // show={t.show}
+          // setShow={setShow}
+          data = {t}
         />
+        )}
       </div>
     </div>
   );

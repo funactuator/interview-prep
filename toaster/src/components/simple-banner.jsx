@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 const STEP_TIME = 100;
 const SimpleBanner = ({
-  text,
-  show,
-  setShow,
+  data,
   autoDismiss = false,
   dismissTime = 3000,
+  closeBanner
 }) => {
 //   const [progress, setProgress] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+//   console.log(data.text)
   // this is to show the progressbar
   const timerRef = useRef();
   useEffect(() => {
-    if (!autoDismiss || !show) return;
+    if (!autoDismiss) return;
     timerRef.current = setInterval(() => {
     //   setProgress((prev) => {
     //     // const newProgress = (((prev + STEP_TIME)/dismissTime) * 100).toFixed(2);
@@ -29,15 +29,16 @@ const SimpleBanner = ({
     return () => {
         timerRef.current = null;
     }
-  }, [autoDismiss, show]);
+  }, [autoDismiss]);
 
   useEffect(() => {
-    if(elapsedTime === dismissTime){
+    if(elapsedTime >= dismissTime){
         timerRef.current = null;
+        closeBanner(data.id);
     }
     // console.log(progress);
   }, [elapsedTime])
-  if (!show) return null;
+//   if (!show) return null;
 
   return (
     <>
@@ -50,11 +51,11 @@ const SimpleBanner = ({
           padding: "2px",
         }}
       >
-        <p>{text}</p>
-        <button onClick={() => setShow(false)}>X</button>
+        <p>{data.message}</p>
+        <button onClick={() => closeBanner(data.id)}>X</button>
       </div>
       <div>
-        {show && elapsedTime > 0 && <progress value={elapsedTime/ dismissTime * 100} max={100} />}
+        {elapsedTime > 0 && <progress value={elapsedTime/ dismissTime * 100} max={100} />}
       </div>
     </>
   );

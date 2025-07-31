@@ -4,3 +4,4 @@
 - in 45 mins, i was only able to create the simple banner + auto dismiss
 - to add the progress bar, it took another 20 mins;
 - speed is slow
+- took another 25 mins to create multiple the multiple thingy
