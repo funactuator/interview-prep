@@ -7,3 +7,5 @@
 - took another 25 mins to create multiple the multiple thingy
 - took another 20 mins to add type props to it. variant
 - by this time i have taken 110 minutes (phase 4 achieved)
+- how to achieve slide from right, slight from left, slight from bottom, slide from top
+- no idea
