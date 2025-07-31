@@ -16,7 +16,8 @@ function App() {
   // const [show, setShow] = useState(false);
   const DISMISS_TIME = 5000;
 
-  const [toasts, setToasts] = useState([])
+  const [toasts, setToasts] = useState([]);
+  const variants = ["info", "error", "warning", "neutral"];
 
   // const timer = useRef();
 
@@ -28,21 +29,30 @@ function App() {
   //   }, DISMISS_TIME);
   // };
 
-  const addBannerTrigger = (e, message = "Banner Opened successfully", autoDismiss = true) => {
-    setToasts((prev) => ([
-      ...prev, 
-      {id: Date.now(), autoDismiss, message}
-    ]))
-  }
+  const addBannerTrigger = (
+    e,
+    message = "Banner Opened successfully",
+    autoDismiss = true
+  ) => {
+    setToasts((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        autoDismiss,
+        message,
+        type: variants[Math.floor(Math.random() * 4)],
+      },
+    ]);
+  };
 
   const closeBanner = (id) => {
-    console.log(id);
-    setToasts((prev) => prev.filter((p) => {
-      return p.id !== id;
-    }))
-  }
-
-
+    // console.log(id);
+    setToasts((prev) =>
+      prev.filter((p) => {
+        return p.id !== id;
+      })
+    );
+  };
 
   // how can we add progressbar with timer thingy?
 
@@ -58,7 +68,7 @@ function App() {
         {/* <button onClick={bannerTrigger}>Trigger Banner with AutoDismiss</button> */}
       </div>
 
-{/* do we require show and setShow */}
+      {/* do we require show and setShow */}
       <div
         style={{
           position: "absolute",
@@ -66,19 +76,20 @@ function App() {
           right: "1rem",
         }}
       >
-        {toasts.map((t) => 
+        {toasts.map((t) => (
           <SimpleBanner
-          key={t.id}
-          autoDismiss = {t.autoDismiss}
-          dismissTime = {DISMISS_TIME}
-          closeBanner = {closeBanner}
-          // show={t.show}
-          // setShow={setShow}
-          data = {t}
-        />
-        )}
+            key={t.id}
+            autoDismiss={t.autoDismiss}
+            dismissTime={DISMISS_TIME}
+            closeBanner={closeBanner}
+            // show={t.show}
+            // setShow={setShow}
+            data={t}
+          />
+        ))}
       </div>
     </div>
+    // <div>hello</div>
   );
 }
 

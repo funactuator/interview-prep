@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 const STEP_TIME = 100;
+// type can be "info" | "error" | "warning"
 const SimpleBanner = ({
   data,
   autoDismiss = false,
   dismissTime = 3000,
-  closeBanner
+  closeBanner=() => {},
 }) => {
 //   const [progress, setProgress] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -38,6 +39,21 @@ const SimpleBanner = ({
     }
     // console.log(progress);
   }, [elapsedTime])
+
+
+  const getCSS = (type) => {
+    switch(type){
+         case "info": 
+            return {backgroundColor: "#E8FFD7", color: "black"};
+        case "error":
+            return {backgroundColor: "#FFD8D8", color: "black"};
+        case "warning":
+            return {backgroundColor: "#FEFFC4", color: "black"};
+        default:
+            return {backgroundColor: "#F2F2F2", color: "black"};
+
+    }
+  }
 //   if (!show) return null;
 
   return (
@@ -49,6 +65,7 @@ const SimpleBanner = ({
           gap: "1rem",
           border: "1px solid gray",
           padding: "2px",
+          ...getCSS(data.type) 
         }}
       >
         <p>{data.message}</p>
