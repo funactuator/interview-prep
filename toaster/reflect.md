@@ -5,3 +5,5 @@
 - to add the progress bar, it took another 20 mins;
 - speed is slow
 - took another 25 mins to create multiple the multiple thingy
+- took another 20 mins to add type props to it. variant
+- by this time i have taken 110 minutes (phase 4 achieved)

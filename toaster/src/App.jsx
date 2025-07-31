@@ -60,8 +60,7 @@ function App() {
     <div>
       <div
         style={{
-          display: "flex",
-          gap: "2rem",
+          
         }}
       >
         <button onClick={addBannerTrigger}>Trigger Banner</button>
@@ -74,6 +73,9 @@ function App() {
           position: "absolute",
           top: "1rem",
           right: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
         }}
       >
         {toasts.map((t) => (

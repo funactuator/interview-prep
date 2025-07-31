@@ -1,78 +1,80 @@
 import { useEffect, useRef, useState } from "react";
-const STEP_TIME = 100;
+const STEP_TIME = 5;
 // type can be "info" | "error" | "warning"
 const SimpleBanner = ({
   data,
   autoDismiss = false,
   dismissTime = 3000,
-  closeBanner=() => {},
+  closeBanner = () => {},
 }) => {
-//   const [progress, setProgress] = useState(0);
+  //   const [progress, setProgress] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-//   console.log(data.text)
+  //   console.log(data.text)
   // this is to show the progressbar
   const timerRef = useRef();
   useEffect(() => {
     if (!autoDismiss) return;
     timerRef.current = setInterval(() => {
-    //   setProgress((prev) => {
-    //     // const newProgress = (((prev + STEP_TIME)/dismissTime) * 100).toFixed(2);
-    //     console.log({currentProgress: prev, 
-    //         newProgress,
-    //         addition: prev + STEP_TIME
-    //     })
-    //     return newProgress; 
-    //   });
-        setElapsedTime(prev => prev + STEP_TIME);
-    //   console.log(progress);
+      //   setProgress((prev) => {
+      //     // const newProgress = (((prev + STEP_TIME)/dismissTime) * 100).toFixed(2);
+      //     console.log({currentProgress: prev,
+      //         newProgress,
+      //         addition: prev + STEP_TIME
+      //     })
+      //     return newProgress;
+      //   });
+      setElapsedTime((prev) => prev + STEP_TIME);
+      //   console.log(progress);
     }, STEP_TIME);
 
     return () => {
-        timerRef.current = null;
-    }
+      timerRef.current = null;
+    };
   }, [autoDismiss]);
 
   useEffect(() => {
-    if(elapsedTime >= dismissTime){
-        timerRef.current = null;
-        closeBanner(data.id);
+    if (elapsedTime >= dismissTime) {
+      timerRef.current = null;
+      closeBanner(data.id);
     }
     // console.log(progress);
-  }, [elapsedTime])
-
+  }, [elapsedTime]);
 
   const getCSS = (type) => {
-    switch(type){
-         case "info": 
-            return {backgroundColor: "#E8FFD7", color: "black"};
-        case "error":
-            return {backgroundColor: "#FFD8D8", color: "black"};
-        case "warning":
-            return {backgroundColor: "#FEFFC4", color: "black"};
-        default:
-            return {backgroundColor: "#F2F2F2", color: "black"};
-
+    switch (type) {
+      case "info":
+        return { backgroundColor: "#E8FFD7", color: "black" };
+      case "error":
+        return { backgroundColor: "#FFD8D8", color: "black" };
+      case "warning":
+        return { backgroundColor: "#FEFFC4", color: "black" };
+      default:
+        return { backgroundColor: "#F2F2F2", color: "black" };
     }
-  }
-//   if (!show) return null;
+  };
+  //   if (!show) return null;
 
   return (
     <>
       <div
+        className="col-flex main-axis-center"
         style={{
-          display: "flex",
-          alignItems: "center",
           gap: "1rem",
           border: "1px solid gray",
           padding: "2px",
-          ...getCSS(data.type) 
+          width: "100%",
+          ...getCSS(data.type),
         }}
       >
-        <p>{data.message}</p>
-        <button onClick={() => closeBanner(data.id)}>X</button>
-      </div>
-      <div>
-        {elapsedTime > 0 && <progress value={elapsedTime/ dismissTime * 100} max={100} />}
+        <div className="row-flex-centered">
+          <p>{data.message}</p>
+          <button onClick={() => closeBanner(data.id)}>X</button>
+        </div>
+        <div className="full-width">
+          {elapsedTime > 0 && (
+            <progress className="full-width" value={(elapsedTime / dismissTime) * 100} max={100} />
+          )}
+        </div>
       </div>
     </>
   );
